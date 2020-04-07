@@ -10,8 +10,96 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-
 // Write code to use inquirer to gather information about the development team members,
+inquirer
+  .prompt([
+    {
+        type: "input",
+        name: "managersName",
+        message: "What's your manager's name?"
+    },
+    {
+        type: "input",
+        name: "managersId",
+        message: "What is your manager's Id?"
+    },
+    {
+        type: "input",
+        name: "managersEmail",
+        message: "What is your manager's email?"
+    },
+    {
+        type: "input",
+        name: "managersOffice",
+        message: "What is your manager's office number?"
+    },
+    {
+        type: "list",
+        name: "specificRoles",
+        message: "What type of team member would you like to add?",
+        choices: [
+          "Intern",
+          "Engineer",
+          "I am done addign team members"
+        ]
+    },
+    // Engineer's Info
+    {
+        type: "input",
+        name: "engineerName",
+        message: "What's your engineer's name?"
+    },
+    {
+        type: "input",
+        name: "engineerId",
+        message: "What is your engineer's Id?"
+    },
+    {
+        type: "input",
+        name: "engineerEmail",
+        message: "What is your manager's email?"
+    },
+    {
+        type: "input",
+        name: "engineerGitHub",
+        message: "What is your GitHub username"
+    },
+
+    // Intern Info
+    {
+        type: "input",
+        name: "internName",
+        message: "What's your intern's name?"
+    },
+    {
+        type: "input",
+        name: "internId",
+        message: "What is your intern's Id?"
+    },
+    {
+        type: "input",
+        name: "internEmail",
+        message: "What is your intern's email?"
+    },
+    {
+        type: "input",
+        name: "internSchool",
+        message: "What is your School's name?"
+    },
+
+  ])
+  .then(answers => {
+    console.log(answers);
+  })
+    .catch(error => {
+        console.log("There was an error");
+
+    });
+ 
+
+
+
+
 // and to create objects for each team member (using the correct classes as blueprints!)
 
 // After the user has input all employees desired, call the `render` function (required
