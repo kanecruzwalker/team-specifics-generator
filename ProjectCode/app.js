@@ -10,92 +10,280 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-// Write code to use inquirer to gather information about the development team members,
-inquirer
-  .prompt([
-    {
-        type: "input",
-        name: "managersName",
-        message: "What's your manager's name?"
-    },
-    {
-        type: "input",
-        name: "managersId",
-        message: "What is your manager's Id?"
-    },
-    {
-        type: "input",
-        name: "managersEmail",
-        message: "What is your manager's email?"
-    },
-    {
-        type: "input",
-        name: "managersOffice",
-        message: "What is your manager's office number?"
-    },
-    {
-        type: "list",
-        name: "specificRoles",
-        message: "What type of team member would you like to add?",
-        choices: [
-          "Intern",
-          "Engineer",
-          "I am done addign team members"
-        ]
-    },
-    // Engineer's Info
-    {
-        type: "input",
-        name: "engineerName",
-        message: "What's your engineer's name?"
-    },
-    {
-        type: "input",
-        name: "engineerId",
-        message: "What is your engineer's Id?"
-    },
-    {
-        type: "input",
-        name: "engineerEmail",
-        message: "What is your manager's email?"
-    },
-    {
-        type: "input",
-        name: "engineerGitHub",
-        message: "What is your GitHub username"
-    },
+const employees = [];
 
-    // Intern Info
-    {
-        type: "input",
-        name: "internName",
-        message: "What's your intern's name?"
-    },
-    {
-        type: "input",
-        name: "internId",
-        message: "What is your intern's Id?"
-    },
-    {
-        type: "input",
-        name: "internEmail",
-        message: "What is your intern's email?"
-    },
-    {
-        type: "input",
-        name: "internSchool",
-        message: "What is your School's name?"
-    },
+class Start {
 
-  ])
-  .then(answers => {
-    console.log(answers);
-  })
-    .catch(error => {
-        console.log("There was an error");
+    prompt1() 
+    {
+        return inquirer
+        .prompt([
+            {
+            type: "input",
+            name: "managersName",
+            message: "What's your manager's name?"
+            },
+            {
+            type: "input",
+            name: "managersId",
+            message: "What is your manager's Id?"
+            },
+            {
+            type: "input",
+            name: "managersEmail",
+            message: "What is your manager's email?"
+            },
+            {
+            type: "input",
+            name: "managersOffice",
+            message: "What is your manager's office number?"
+            },
+            {
+            type: "list",
+            name: "specificRoles",
+            message: "What type of team member would you like to add?",
+            choices: 
+                [
+                "Intern",
+                "Engineer",
+                "I am done addign team members"
+                ]
+            },
+        ])
+        .then(answers => {
+            const manager = new Manager(answers.managersName, answers.managersId, answers.managersEmail, answers.managersOffice)
+            employees.push(manager);
+            console.log(employees);
 
-    });
- 
+            if (answers.specificRoles === "Intern") 
+            {
+                this.prompt2();
+            } 
+            else if (answers.specificRoles === "Engineer") 
+            {
+                this.prompt3();
+            }
+        })
+        .catch(error => {
+            console.log("There was an error");
+
+        });
+    }
+
+    prompt2() {
+        return inquirer
+        .prompt([
+            {
+            type: "input",
+            name: "internName",
+            message: "What's your intern's name?"
+            },
+            {
+            type: "input",
+            name: "internId",
+            message: "What is your intern's Id?"
+            },
+            {
+            type: "input",
+            name: "internEmail",
+            message: "What is your intern's email?"
+            },
+            {
+            type: "input",
+            name: "internSchool",
+            message: "What is your School's name?"
+            },
+            {
+            type: "list",
+            name: "specificRoles",
+            message: "Would you like to add another team member?",
+            choices: 
+            [
+            "Intern",
+            "Engineer",
+            "I am done addign team members"
+            ]
+            },
+        ])
+        .then(answers => {
+            const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool)
+            employees.push(intern);
+            console.log(employees);
+            
+            if (answers.specificRoles === "Intern") 
+            {
+                this.prompt2();
+            } 
+            else if (answers.specificRoles === "Engineer") 
+            {
+                this.prompt3();
+            }
+        })
+        .catch(error => {
+            console.log("There was an error");
+
+        });
+    }
+
+    prompt3() {
+        return inquirer
+        .prompt([
+            {
+            type: "input",
+            name: "engineerName",
+            message: "What's your engineer's name?"
+            },
+            {
+            type: "input",
+            name: "engineerId",
+            message: "What is your engineer's Id?"
+            },
+            {
+            type: "input",
+            name: "engineerEmail",
+            message: "What is your manager's email?"
+            },
+            {
+            type: "input",
+            name: "engineerGitHub",
+            message: "What is your GitHub username"
+            },
+            {
+            type: "list",
+            name: "specificRoles",
+            message: "Would you like to add another team member?",
+            choices: 
+            [
+            "Intern",
+            "Engineer",
+            "I am done addign team members"
+            ]
+            },
+            ])
+            .then(answers => 
+            {
+            const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGitHub)
+            employees.push(engineer);
+            console.log(employees);
+
+            if (answers.specificRoles === "Intern") 
+            {
+                this.prompt2();
+            } 
+            else if (answers.specificRoles === "Engineer") 
+            {
+                this.prompt3();
+            }
+
+            })
+            .catch(error => 
+            {
+            console.log("There was an error");
+            });
+    }
+}
+
+
+const generator = new Start();
+
+generator.prompt1();
+
+
+
+
+
+
+
+
+
+
+// // Write code to use inquirer to gather information about the development team members,
+// inquirer
+//   .prompt([
+//     {
+//         type: "input",
+//         name: "managersName",
+//         message: "What's your manager's name?"
+//     },
+//     {
+//         type: "input",
+//         name: "managersId",
+//         message: "What is your manager's Id?"
+//     },
+//     {
+//         type: "input",
+//         name: "managersEmail",
+//         message: "What is your manager's email?"
+//     },
+//     {
+//         type: "input",
+//         name: "managersOffice",
+//         message: "What is your manager's office number?"
+//     },
+//     {
+//         type: "list",
+//         name: "specificRoles",
+//         message: "What type of team member would you like to add?",
+//         choices: [
+//           "Intern",
+//           "Engineer",
+//           "I am done addign team members"
+//         ]
+//     },
+
+//     // Engineer's Info
+//     {
+//         type: "input",
+//         name: "engineerName",
+//         message: "What's your engineer's name?"
+//     },
+//     {
+//         type: "input",
+//         name: "engineerId",
+//         message: "What is your engineer's Id?"
+//     },
+//     {
+//         type: "input",
+//         name: "engineerEmail",
+//         message: "What is your manager's email?"
+//     },
+//     {
+//         type: "input",
+//         name: "engineerGitHub",
+//         message: "What is your GitHub username"
+//     },
+
+//     // Intern Info
+//     {
+//         type: "input",
+//         name: "internName",
+//         message: "What's your intern's name?"
+//     },
+//     {
+//         type: "input",
+//         name: "internId",
+//         message: "What is your intern's Id?"
+//     },
+//     {
+//         type: "input",
+//         name: "internEmail",
+//         message: "What is your intern's email?"
+//     },
+//     {
+//         type: "input",
+//         name: "internSchool",
+//         message: "What is your School's name?"
+//     },
+
+//   ])
+//   .then(answers => {
+//     console.log(answers);
+//   })
+//     .catch(error => {
+//         console.log("There was an error");
+
+//     });
+
 
 
 
