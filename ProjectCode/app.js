@@ -12,42 +12,40 @@ const render = require("./lib/htmlRenderer");
 
 const employees = [];
 
-class Start {
+const start = function () {
 
-    prompt1() 
-    {
-        return inquirer
+    inquirer
         .prompt([
             {
-            type: "input",
-            name: "managersName",
-            message: "What's your manager's name?"
+                type: "input",
+                name: "managersName",
+                message: "What's your manager's name?"
             },
             {
-            type: "input",
-            name: "managersId",
-            message: "What is your manager's Id?"
+                type: "input",
+                name: "managersId",
+                message: "What is your manager's Id?"
             },
             {
-            type: "input",
-            name: "managersEmail",
-            message: "What is your manager's email?"
+                type: "input",
+                name: "managersEmail",
+                message: "What is your manager's email?"
             },
             {
-            type: "input",
-            name: "managersOffice",
-            message: "What is your manager's office number?"
+                type: "input",
+                name: "managersOffice",
+                message: "What is your manager's office number?"
             },
             {
-            type: "list",
-            name: "specificRoles",
-            message: "What type of team member would you like to add?",
-            choices: 
-                [
-                "Intern",
-                "Engineer",
-                "I am done addign team members"
-                ]
+                type: "list",
+                name: "specificRoles",
+                message: "What type of team member would you like to add?",
+                choices:
+                    [
+                        "Intern",
+                        "Engineer",
+                        "I am done adding team members"
+                    ]
             },
         ])
         .then(answers => {
@@ -55,139 +53,149 @@ class Start {
             employees.push(manager);
             console.log(employees);
 
-            if (answers.specificRoles === "Intern") 
-            {
-                this.prompt2();
-            } 
-            else if (answers.specificRoles === "Engineer") 
-            {
-                this.prompt3();
+            if (answers.specificRoles === "Intern") {
+                prompt2();
+            }
+            else if (answers.specificRoles === "Engineer") {
+                prompt3();
+            } else if (answers.specifiRoles === "I am done adding team members") {
+                endFile();
             }
         })
         .catch(error => {
             console.log("There was an error");
 
         });
-    }
+}
 
-    prompt2() {
-        return inquirer
+function prompt2() {
+    inquirer
         .prompt([
             {
-            type: "input",
-            name: "internName",
-            message: "What's your intern's name?"
+                type: "input",
+                name: "internName",
+                message: "What's your intern's name?"
             },
             {
-            type: "input",
-            name: "internId",
-            message: "What is your intern's Id?"
+                type: "input",
+                name: "internId",
+                message: "What is your intern's Id?"
             },
             {
-            type: "input",
-            name: "internEmail",
-            message: "What is your intern's email?"
+                type: "input",
+                name: "internEmail",
+                message: "What is your intern's email?"
             },
             {
-            type: "input",
-            name: "internSchool",
-            message: "What is your School's name?"
+                type: "input",
+                name: "internSchool",
+                message: "What is your School's name?"
             },
             {
-            type: "list",
-            name: "specificRoles",
-            message: "Would you like to add another team member?",
-            choices: 
-            [
-            "Intern",
-            "Engineer",
-            "I am done addign team members"
-            ]
+                type: "list",
+                name: "specificRoles",
+                message: "Would you like to add another team member?",
+                choices:
+                    [
+                        "Intern",
+                        "Engineer",
+                        "I am done adding team members"
+                    ]
             },
         ])
         .then(answers => {
             const intern = new Intern(answers.internName, answers.internId, answers.internEmail, answers.internSchool)
             employees.push(intern);
             console.log(employees);
-            
-            if (answers.specificRoles === "Intern") 
-            {
-                this.prompt2();
-            } 
-            else if (answers.specificRoles === "Engineer") 
-            {
-                this.prompt3();
+
+            if (answers.specificRoles === "Intern") {
+                prompt2();
+            }
+            else if (answers.specificRoles === "Engineer") {
+                prompt3();
+            } else if (answers.specifiRoles === "I am done adding team members") {
+                endFile();
             }
         })
         .catch(error => {
             console.log("There was an error");
 
         });
-    }
+}
 
-    prompt3() {
-        return inquirer
+function prompt3() {
+    return inquirer
         .prompt([
             {
-            type: "input",
-            name: "engineerName",
-            message: "What's your engineer's name?"
+                type: "input",
+                name: "engineerName",
+                message: "What's your engineer's name?"
             },
             {
-            type: "input",
-            name: "engineerId",
-            message: "What is your engineer's Id?"
+                type: "input",
+                name: "engineerId",
+                message: "What is your engineer's Id?"
             },
             {
-            type: "input",
-            name: "engineerEmail",
-            message: "What is your manager's email?"
+                type: "input",
+                name: "engineerEmail",
+                message: "What is your manager's email?"
             },
             {
-            type: "input",
-            name: "engineerGitHub",
-            message: "What is your GitHub username"
+                type: "input",
+                name: "engineerGitHub",
+                message: "What is your GitHub username"
             },
             {
-            type: "list",
-            name: "specificRoles",
-            message: "Would you like to add another team member?",
-            choices: 
-            [
-            "Intern",
-            "Engineer",
-            "I am done addign team members"
-            ]
+                type: "list",
+                name: "specificRoles",
+                message: "Would you like to add another team member?",
+                choices:
+                    [
+                        "Intern",
+                        "Engineer",
+                        "I am done adding team members"
+                    ]
             },
-            ])
-            .then(answers => 
-            {
+        ])
+        .then(answers => {
             const engineer = new Engineer(answers.engineerName, answers.engineerId, answers.engineerEmail, answers.engineerGitHub)
             employees.push(engineer);
             console.log(employees);
 
-            if (answers.specificRoles === "Intern") 
-            {
-                this.prompt2();
-            } 
-            else if (answers.specificRoles === "Engineer") 
-            {
-                this.prompt3();
+            if (answers.specificRoles === "Intern") {
+                prompt2();
+            }
+            else if (answers.specificRoles === "Engineer") {
+                prompt3();
+            } else if (answers.specifiRoles === "I am done adding team members") {
+                this.endFile();
             }
 
-            })
-            .catch(error => 
-            {
+        })
+        .catch(error => {
             console.log("There was an error");
-            });
-    }
+        });
 }
 
 
-const generator = new Start();
+function endFile() {
+    fs.writeFileSync("team.html", render(employees), function(error) {
+        if (error) {
+            // stop execution if there is
+            console.log(error)
+            return console.log(error);
+          }
+          // finished writing to file
+          console.log("Success!");
+    })
+    // if (!fs.existsSync(OUTPUT_DIR)) {
+    //     fs.mkdirSync(OUTPUT_DIR)
+    // }
+    // fs.writeFileSync(outputPath, render(employees), "utf-8");
+}
 
-generator.prompt1();
-
+start();
 
 
 // and to create objects for each team member (using the correct classes as blueprints!)
